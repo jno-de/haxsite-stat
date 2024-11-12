@@ -1,84 +1,88 @@
-/**
- * Copyright 2024 jno-de
- * @license Apache-2.0, see LICENSE for full text.
- */
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from 'lit';
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
-import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
+import "./haxsite-card.js";
 
-/**
- * `haxsite-stat`
- * 
- * @demo index.html
- * @element haxsite-stat
- */
-export class HaxsiteStat extends DDDSuper(I18NMixin(LitElement)) {
-
-  static get tag() {
-    return "haxsite-stat";
-  }
-
+export class HaxSiteStat extends DDDSuper(LitElement) {
   constructor() {
     super();
-    this.title = "";
-    this.t = this.t || {};
-    this.t = {
-      ...this.t,
-      title: "Title",
-    };
-    this.registerLocalization({
-      context: this,
-      localesPath:
-        new URL("./locales/haxsite-stat.ar.json", import.meta.url).href +
-        "/../",
-      locales: ["ar", "es", "hi", "zh"],
-    });
+    this.url = '';
+    this.items = [];
   }
 
-  // Lit reactive properties
   static get properties() {
     return {
-      ...super.properties,
-      title: { type: String },
+      url: { type: String },
+      items: { type: Array, },
     };
   }
 
-  // Lit scoped styles
   static get styles() {
-    return [super.styles,
-    css`
+    return [super.styles, css`
       :host {
         display: block;
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
       }
-      .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
+
+      #searchbar {
+        display: flex;
+        margin: 20px auto;
+        padding: 5px 10px;
+        width: 100%;
+        max-width: 400px;
       }
-      h3 span {
-        font-size: var(--haxsite-stat-label-font-size, var(--ddd-font-size-s));
+
+      #input {
+        font-size: 16px;
+        width: 100%;
+      }
+
+      .results {
+        height: 100%;
       }
     `];
   }
 
-  // Lit render the HTML
+  search(e) {
+    this.url = this.shadowRoot.querySelector('#input').value;
+  }
+
   render() {
     return html`
-<div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-</div>`;
+      <div id="searchbar">
+        <input id="input" placeholder="https://haxtheweb.org/site.json" />
+        <div id="searchbutton"><button @click="${this.search}">Analyze</button></div>
+      </div>
+      <div class="results">
+        ${this.items.map((item) => {
+          return html`
+            <haxsite-card
+              title="${item.title}"
+              created="${item.created}"
+              updated="${item.updated}"
+              description="${item.description}"
+              logo="${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}"
+              slug="${item.slug}"
+              baseURL="${this.url.replace("/site.json", '')}"
+            ></haxsite-card>
+          `;
+        })}
+      </div>
+    `;
   }
 
-  /**
-   * haxProperties integration via file reference
-   */
-  static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
-      .href;
+  updated(changedProperties) {
+    if (changedProperties.has('url')) {
+      if (!this.url) { // If search bar is empty, clear the results
+        this.items = [];
+      } else {
+        fetch(this.url).then(d => d.ok ? d.json(): {}).then(data => {
+          this.items = data.items;
+        });
+      }
+    }
+  }
+
+  static get tag() {
+    return 'haxsite-stat';
   }
 }
-
-globalThis.customElements.define(HaxsiteStat.tag, HaxsiteStat);
+customElements.define(HaxSiteStat.tag, HaxSiteStat);
