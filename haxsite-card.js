@@ -35,6 +35,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
           max-width: 320px;
           height: 512px;
           padding: 16px;
+          border: 2px solid black;
           text-decoration: none;
       }
 
