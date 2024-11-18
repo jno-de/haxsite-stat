@@ -40,6 +40,11 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
 
       .results {
         height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        padding: 16px;
+        justify-items: center;
       }
     `];
   }

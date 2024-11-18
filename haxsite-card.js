@@ -8,7 +8,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
     this.description = '';
     this.created = '';
     this.updated = '';
-    this.logo = '';
+    this.logo = 'https://haxtheweb.org/files/hax%20(1).png';
     this.slug = '';
     this.baseURL = '';
   }

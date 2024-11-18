@@ -37,8 +37,8 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
           flex-direction: column;
           align-items: center;
           width: 100%;
-          max-width: 320px;
-          height: 512px;
+          max-width: 640px;
+          height: 320px;
           padding: 16px;
           border: 2px solid black;
           text-decoration: none;
