@@ -1,13 +1,18 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 
-export class HaxSiteCard extends DDDSuper(LitElement) {
+import '@haxtheweb/hax-iconset/hax-iconset.js';
+import '@haxtheweb/simple-icon/simple-icon.js';
+
+export class HaxSiteDetails extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.title = '';
     this.description = '';
     this.created = '';
     this.updated = '';
+    this.hexCode = '';
+    this.theme = '';
     this.logo = '';
     this.slug = '';
     this.baseURL = '';
@@ -19,6 +24,8 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
         description: { type: String },
         created: { type: String },
         updated: { type: String },
+        hexCode: { type: String },
+        theme: { type: String },
         logo: { type: String },
         slug: { type: String },
         baseURL: { type: String }
@@ -78,19 +85,20 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
       target="_blank"
     >
       <div class="image">
-        <img src="${this.baseURL}/${this.logo}" alt="${this.title}" />
+        <img src="${this.logo}" alt=""/>
       </div>
       <div class="text-title">${this.title}</div>
       <div class="text-desc">${this.created}</div>
       <div class="text-desc">${this.updated}</div>
       <div class="text-desc">${this.description}</div>
+      <div class="text-desc">${this.theme}</div>
     </a>
     `;
   }
 
   static get tag() {
-    return "haxsite-card";
+    return "haxsite-details";
   }
 }
 
-customElements.define(HaxSiteCard.tag, HaxSiteCard);
+customElements.define(HaxSiteDetails.tag, HaxSiteDetails);
