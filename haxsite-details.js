@@ -14,8 +14,7 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
     this.hexCode = '';
     this.theme = '';
     this.logo = '';
-    this.slug = '';
-    this.baseURL = '';
+    this.url = '';
   }
 
   static get properties() {
@@ -27,8 +26,7 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
         hexCode: { type: String },
         theme: { type: String },
         logo: { type: String },
-        slug: { type: String },
-        baseURL: { type: String }
+        url: { type: String }
     };
   }
 
@@ -81,7 +79,7 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
     <a
       class="card"
       tabindex="0"
-      href="${this.baseURL+'/'+this.slug}"
+      href="${this.url}"
       target="_blank"
     >
       <div class="image">

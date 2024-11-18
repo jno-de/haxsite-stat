@@ -50,7 +50,28 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
   }
 
   search(e) {
-    this.url = this.shadowRoot.querySelector('#input').value;
+    let input = this.shadowRoot.querySelector('#input').value.replace(/\s+/g, ''); // set variable to hold input, remove any white space
+    let url; // set variable to hold URL object for validating input
+
+    try {
+      url = new URL(input); // attempt to set input to a URL object
+    } catch (e) { // failed to set URL to value
+      try {
+        url = new URL('https://' + input); // attempt to set input to a URL object again, except also prepend https://
+      } catch (e) { // failed to set URL to value again
+        return;
+      }
+    }
+
+    if (!/^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(url.hostname)) { // If URL domain naim is empty/invalid, return
+      return;
+    }
+
+    if (!url.pathname.endsWith('/site.json')) { // if the URL object doesn't have a site.json, set it
+      url.pathname = '/site.json';
+    }
+
+    this.url = url.toString();
   }
 
   enter(e) {
@@ -77,7 +98,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
             hexCode=${this.data.metadata.theme.variables.hexCode}
             theme=${this.data.metadata.theme.name}
             icon=${this.data.metadata.theme.variables.icon}
-            url=${this.url}
+            url="${this.url.replace("/site.json", '')}"
           ></haxsite-details>
         </div>
 
@@ -106,8 +127,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         if (data.items) {
           this.data = null;
           this.data = data;
-          this.items = [];
-          this.items = data.items;
+          this.items = [...data.items];
         }
       });
     }
