@@ -7,14 +7,14 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
   constructor() {
     super();
     this.url = '';
-    this.data = [];
+    this.data = null;
     this.items = [];
   }
 
   static get properties() {
     return {
       url: { type: String },
-      data: { type : Array },
+      data: { type : Object },
       items: { type: Array },
     };
   }
@@ -66,23 +66,37 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         <div id="searchbutton"><button @click="${this.search}">Analyze</button></div>
       </div>
 
-      
+      ${this.data === null ? html`` : html `
+        <div class="results">
+          <haxsite-details
+            title=${this.data.title}
+            created=${this.unixToUTC(parseInt(this.data.metadata.site.created))}
+            updated=${this.unixToUTC(parseInt(this.data.metadata.site.updated))}
+            description=${this.data.description}
+            logo='${this.url}${this.data.metadata.site.logo}'
+            hexCode=${this.data.metadata.theme.variables.hexCode}
+            theme=${this.data.metadata.theme.name}
+            icon=${this.data.metadata.theme.variables.icon}
+            url=${this.url}
+          ></haxsite-details>
+        </div>
 
-      <div class="results">
-        ${this.items.map((item) => {
-          return html`
-            <haxsite-card
-              title="${item.title}"
-              created=${this.unixToUTC(parseInt(item.metadata.created))}
-              updated=${this.unixToUTC(parseInt(item.metadata.updated))}
-              description="${item.description}"
-              logo="${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}"
-              slug="${item.slug}"
-              baseURL="${this.url.replace("/site.json", '')}"
-            ></haxsite-card>
-          `;
-        })}
-      </div>
+        <div class="results">
+          ${this.items.map((item) => {
+            return html`
+              <haxsite-card
+                title="${item.title}"
+                created=${this.unixToUTC(parseInt(item.metadata.created))}
+                updated=${this.unixToUTC(parseInt(item.metadata.updated))}
+                description="${item.description}"
+                logo="${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}"
+                slug="${item.slug}"
+                baseURL="${this.url.replace("/site.json", '')}"
+              ></haxsite-card>
+            `;
+          })}
+        </div>
+      `}
     `;
   }
 

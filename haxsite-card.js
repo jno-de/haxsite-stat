@@ -78,7 +78,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
       target="_blank"
     >
       <div class="image">
-        <img src="${this.baseURL}/${this.logo}" alt="${this.title}" />
+        <img src="${this.baseURL}/${this.logo}" alt="" />
       </div>
       <div class="text-title">${this.title}</div>
       <div class="text-desc">${this.created}</div>
