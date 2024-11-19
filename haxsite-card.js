@@ -11,6 +11,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
     this.logo = '';
     this.slug = '';
     this.baseURL = '';
+    this.pageSource = '';
   }
 
   static get properties() {
@@ -21,7 +22,8 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
         updated: { type: String },
         logo: { type: String },
         slug: { type: String },
-        baseURL: { type: String }
+        baseURL: { type: String },
+        pageSource: { type: String }
     };
   }
 
@@ -39,16 +41,12 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
           text-decoration: none;
       }
 
-      img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        border-radius: 8px;
-      }
-
       .image {
         display: flex;
         width: 100%;
+        height: auto;
+        object-fit:cover;
+        border-radius: 8px;
         aspect-ratio: 1.618;
         overflow: hidden;
         align-items: center;
@@ -71,20 +69,19 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
 
   render() {
     return html`
-    <a
-      class="card"
-      tabindex="0"
-      href="${this.baseURL+this.slug}"
-      target="_blank"
-    >
-      <div class="image">
-        <img src="${this.baseURL}/${this.logo}" alt="" />
-      </div>
+    <div class = "card">
+      <img class="image" src="${this.baseURL}/${this.logo}" alt=""/>
       <div class="text-title">${this.title}</div>
-      <div class="text-desc">${this.created}</div>
-      <div class="text-desc">${this.updated}</div>
+
+      <div>
+        <a class="text-desc" href="${this.baseURL+this.slug}" target="_blank">Content</a>
+        <a class="text-desc" href="${this.pageSource}" target="_blank">Source</a>
+      </div>
+
       <div class="text-desc">${this.description}</div>
-    </a>
+      <div class="text-desc">Created: ${this.created}</div>
+      <div class="text-desc">Updated: ${this.updated}</div>
+    </div>
     `;
   }
 

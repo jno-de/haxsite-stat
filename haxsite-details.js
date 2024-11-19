@@ -44,16 +44,12 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
           text-decoration: none;
       }
 
-      img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-        border-radius: 8px;
-      }
-
       .image {
         display: flex;
         width: 100%;
+        height: auto;
+        object-fit:cover;
+        border-radius: 8px;
         aspect-ratio: 1.618;
         overflow: hidden;
         align-items: center;
@@ -78,19 +74,21 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
     return html`
     <a
       class="card"
-      tabindex="0"
       href="${this.url}"
       target="_blank"
     >
-      <div class="image">
-        <img src="${this.logo}" alt=""/>
-      </div>
-      <div class="text-title">${this.title}</div>
-      <div class="text-desc">${this.created}</div>
-      <div class="text-desc">${this.updated}</div>
-      <div class="text-desc">${this.description}</div>
-      <div class="text-desc">${this.theme}</div>
-      <div class="text-desc">${this.hexCode}</div>
+        <img class="image" src="${this.logo}" alt=""/>
+
+        <div class="details">
+            <div class="text-title">${this.title}</div>
+            <div class="text-desc">Description: ${this.description}</div>
+            
+            <div class="text-desc">Created: ${this.created}</div>
+            <div class="text-desc">Updated: ${this.updated}</div>
+            
+            <div class="text-desc">Theme: ${this.theme}</div>
+            <div class="text-desc">HexCode: ${this.hexCode}</div>
+        </div>
     </a>
     `;
   }

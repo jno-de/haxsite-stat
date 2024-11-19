@@ -17,7 +17,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
       url: { type: String },
       data: { type : Object },
       items: { type: Array },
-      loading: { type: Boolean }
+      loading: { type: Boolean, reflect: true }
     };
   }
 
@@ -27,12 +27,20 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         display: block;
       }
 
+      #title {
+        
+      }
+
       #searchbar {
         display: flex;
         margin: 20px auto;
         padding: 5px 10px;
         width: 100%;
         max-width: 400px;
+      }
+
+      #searchbutton {
+        
       }
 
       #input {
@@ -49,11 +57,6 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         justify-items: center;
       }
     `];
-  }
-
-  unixToUTC(timestamp) {
-    const date = new Date(timestamp * 1000);
-    return date.toUTCString();
   }
 
   search(e) {
@@ -81,16 +84,23 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
       });
   }
 
-  enter(e) {
+  enterKeyPress(e) {
     if (e.key === "Enter") {
       this.search();
     }
   }
 
+  unixToUTC(timestamp) {
+    const date = new Date(timestamp * 1000);
+    return date.toUTCString();
+  }
+
   render() {
     return html`
+      <h2 class="title">Hax Site Search</h2>
+
       <div id="searchbar">
-        <input id="input" placeholder="https://haxtheweb.org/site.json" @keyup="${this.enter}"/>
+        <input id="input" placeholder="https://haxtheweb.org/site.json" @keyup="${this.enterKeyPress}"/>
         <div id="searchbutton"><button @click="${this.search}">Analyze</button></div>
       </div>
 
@@ -105,7 +115,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
             hexCode=${this.data.metadata.theme.variables.hexCode}
             theme=${this.data.metadata.theme.name}
             icon=${this.data.metadata.theme.variables.icon}
-            url="${this.url.replace("/site.json", '')}"
+            url="${this.url}"
           ></haxsite-details>
         </div>
 
@@ -119,7 +129,8 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
                 description="${item.description}"
                 logo="${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}"
                 slug="${item.slug}"
-                baseURL="${this.url.replace("/site.json", '')}"
+                baseURL="${this.url}"
+                pageSource="${this.url}${item.location}"
               ></haxsite-card>
             `;
           })}
