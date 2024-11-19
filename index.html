@@ -24,7 +24,15 @@
     <h1>haxsite-stat</h1>
     <haxsite-stat></haxsite-stat>
   </div>
+  <script> const _customElementsDefine = window.customElements.define;
+    window.customElements.define = (name, cl, conf) => {
+      if (!customElements.get(name)) {
+        _customElementsDefine.call(window.customElements, name, cl, conf);
+      } else {
+        console.warn(`${name} has been defined twice`);
+      }
+    };
+    </script>
   <script type="module" src="./haxsite-stat.js"></script>
-  <script type="module" src="https://cdn.hax.cloud/cdn/build/es6/node_modules/@haxtheweb/simple-icon/simple-icon.js"></script>
 </body>
 </html>
