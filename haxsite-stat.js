@@ -28,7 +28,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
       }
 
       #title {
-        
+        text-align: center;
       }
 
       #searchbar {
@@ -40,7 +40,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
       }
 
       #searchbutton {
-        
+
       }
 
       #input {
@@ -97,7 +97,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
 
   render() {
     return html`
-      <h2 class="title">Hax Site Search</h2>
+      <h2 id="title">Hax Site Search</h2>
 
       <div id="searchbar">
         <input id="input" placeholder="https://haxtheweb.org/site.json" @keyup="${this.enterKeyPress}"/>
@@ -127,7 +127,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
                 created=${this.unixToUTC(parseInt(item.metadata.created))}
                 updated=${this.unixToUTC(parseInt(item.metadata.updated))}
                 description="${item.description}"
-                logo="${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}"
+                logo=${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}
                 slug="${item.slug}"
                 baseURL="${this.url}"
                 pageSource="${this.url}${item.location}"

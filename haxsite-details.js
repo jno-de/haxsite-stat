@@ -72,13 +72,8 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
 
   render() {
     return html`
-    <a
-      class="card"
-      href="${this.url}"
-      target="_blank"
-    >
+    <a class="card" href="${this.url}" target="_blank">
         <img class="image" src="${this.logo}" alt=""/>
-
         <div class="details">
             <div class="text-title">${this.title}</div>
             <div class="text-desc">Description: ${this.description}</div>
