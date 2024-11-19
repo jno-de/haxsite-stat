@@ -32,18 +32,6 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
 
   static get styles() {
     return [super.styles, css`
-      .card {
-          display: inline-flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-          max-width: 640px;
-          height: 320px;
-          padding: 16px;
-          border: 2px solid black;
-          text-decoration: none;
-      }
-
       .image {
         display: flex;
         width: 100%;
@@ -67,12 +55,27 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
         margin-top: 8px;
         text-align: center;
       }
+
+      a.site {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        background-image: var(--ddd-theme-default-gradient-newsFeature);
+        color: var(--ddd-theme-default-slateMaxLight);
+        border-radius: 8px;
+        font-size: 16px; 
+        width: 500px;
+        padding: 20px;
+        margin: 20px auto;
+      }
     `];
   }
 
   render() {
     return html`
-    <a class="card" href="${this.url}" target="_blank">
+    <a class="site" href="${this.url}" target="_blank">
         <img class="image" src="${this.logo}" alt=""/>
         <div class="details">
             <div class="text-title">${this.title}</div>

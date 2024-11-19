@@ -31,7 +31,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         text-align: center;
       }
 
-      #searchbar {
+      #search-bar {
         display: flex;
         margin: 20px auto;
         padding: 5px 10px;
@@ -39,11 +39,17 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
         max-width: 400px;
       }
 
-      #searchbutton {
-
+      #search-button {
+        font-family: var(--ddd-font-primary);
+        background-image: var(--ddd-theme-default-gradient-buttons);
+        color: var(--ddd-theme-default-slateMaxLight);
+        height: 30px;
+        width: 120px;
+        border-radius: 12px;
       }
 
       #input {
+        font-family: var(--ddd-font-primary);
         font-size: 16px;
         width: 100%;
       }
@@ -99,9 +105,9 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
     return html`
       <h2 id="title">Hax Site Search</h2>
 
-      <div id="searchbar">
+      <div id="search-bar">
         <input id="input" placeholder="https://haxtheweb.org/site.json" @keyup="${this.enterKeyPress}"/>
-        <div id="searchbutton"><button @click="${this.search}">Analyze</button></div>
+        <button id="search-button" type="submit" @click="${this.search}">Analyze</button>
       </div>
 
       ${this.data === null ? html`` : html `
@@ -128,6 +134,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
                 updated=${this.unixToUTC(parseInt(item.metadata.updated))}
                 description="${item.description}"
                 logo=${item.metadata && item.metadata.files && item.metadata.files[0] ? item.metadata.files[0].url : ''}
+                readTime="${item.metadata.readtime}"
                 slug="${item.slug}"
                 baseURL="${this.url}"
                 pageSource="${this.url}${item.location}"

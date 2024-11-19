@@ -9,6 +9,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
     this.created = '';
     this.updated = '';
     this.logo = '';
+    this.readTime = '';
     this.slug = '';
     this.baseURL = '';
     this.pageSource = '';
@@ -21,6 +22,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
         created: { type: String },
         updated: { type: String },
         logo: { type: String },
+        readTime: { type: String},
         slug: { type: String },
         baseURL: { type: String },
         pageSource: { type: String }
@@ -37,8 +39,8 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
         max-width: 320px;
         height: 512px;
         padding: 16px;
-        background-color: #003f8c;
-        border-radius: 8px;
+        border: var(--ddd-border-sm);
+        border-radius: 12px;
         text-decoration: none;
       }
 
@@ -57,47 +59,43 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
 
       .text-title {
         font-size: 24px;
+        font-family: var(--ddd-font-primary);
+        font-weight: var(--ddd-font-weight-bold);
+        color: var(--ddd-theme-primary);
         margin-bottom: 16px;
         text-align: center;
-        color: white;
       }
 
       .text-desc {
         font-size: 16px;
+        font-family: var(--ddd-font-primary);
+        color: var(--ddd-theme-primary);
         margin-top: 8px;
         text-align: center;
-        color: white;
       }
 
       .text-dates {
         font-size: 16px;
+        font-family: var(--ddd-font-primary);
+        color: var(--ddd-theme-primary);
         margin-top: 8px;
         text-align: left;
-        color: white;
       }
 
       .buttons {
         display: flex;
-        gap: 20px; /* Horizontal space between items */
+        gap: 20px;
       }
 
       a.button {
-        display: inline-block;       /* Make it behave like a block-level element for padding */
-        padding: 5px 10px;          /* Add padding for button-like size */
-        background-color: #007bff;   /* Button background color */
-        color: white;                /* Text color */
-        text-align: center;          /* Center the text inside the button */
-        text-decoration: none;       /* Remove the default underline */
-        border-radius: 5px;          /* Rounded corners */
-        font-size: 16px;             /* Font size for the button */
-      }
-
-      a.button:hover {
-        background-color: #0056b3;  /* Darken the background on hover */
-      }
-
-      a.button:active {
-        background-color: #003f8c;  /* Darker background when the button is clicked */
+        display: inline-block;
+        padding: 5px 10px;
+        background-image: var(--ddd-theme-default-gradient-buttons);
+        color: var(--ddd-theme-default-slateMaxLight);
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px; 
       }
     `];
   }
@@ -106,7 +104,10 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
     return html`
     <div class = "card">
       <div class="text-title">${this.title}</div>
-      <img class="image" src="${this.baseURL}/${this.logo}" alt=""/>
+
+      <a href=${this.baseURL}${this.logo} ?hidden="${this.logo === ''}">
+        <img class="image" src="${this.baseURL}${this.logo}" alt=""/>
+      </a>
 
       <div class="buttons">
         <a class="button" href="${this.baseURL+this.slug}" target="_blank">Content</a>
@@ -118,6 +119,7 @@ export class HaxSiteCard extends DDDSuper(LitElement) {
       <div class="text-dates">
         <div>Created: ${this.created}</div>
         <div>Updated: ${this.updated}</div>
+        <div>Read Time: ${this.readTime} minutes</div>
       </div>
     </div>
     `;
