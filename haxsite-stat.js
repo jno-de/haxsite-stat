@@ -29,6 +29,7 @@ export class HaxSiteStat extends DDDSuper(LitElement) {
 
       #title {
         text-align: center;
+        font-weight: var(--ddd-font-weight-bold);
       }
 
       #search-bar {
