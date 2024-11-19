@@ -90,6 +90,7 @@ export class HaxSiteDetails extends DDDSuper(LitElement) {
       <div class="text-desc">${this.updated}</div>
       <div class="text-desc">${this.description}</div>
       <div class="text-desc">${this.theme}</div>
+      <div class="text-desc">${this.hexCode}</div>
     </a>
     `;
   }
